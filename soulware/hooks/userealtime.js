@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const ENDPOINT = "http://localhost:3000";
 let socket;
 
 export const useRealtimeSocket = (userId, chatId) => {
@@ -14,8 +13,8 @@ export const useRealtimeSocket = (userId, chatId) => {
         // Hit the API route once to spin up the Socket.IO server
         await fetch("/api/socket");
 
-        // Connect to socket.io
-        socket = io(ENDPOINT, {
+        // Connect to socket.io on the same origin as the website
+        socket = io({
           transports: ["websocket", "polling"],
           upgrade: true,
           rememberUpgrade: true,
@@ -59,5 +58,5 @@ export const useRealtimeSocket = (userId, chatId) => {
     };
   }, [userId, chatId]); // re-run if user or chat changes
 
-  return { socket, socketConnected };
+  return { socket, socketConnected };
 };
