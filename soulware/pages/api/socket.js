@@ -15,10 +15,6 @@ export default function handler(req, res) {
 
     io = new Server(res.socket.server, {
       pingTimeout: 60000,
-      cors: {
-        origin: "http://localhost:3000", // change in prod
-        methods: ["GET", "POST"],
-      },
     });
 
     res.socket.server.io = io;
